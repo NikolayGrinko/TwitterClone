@@ -9,6 +9,33 @@ import UIKit
 
 class ProfileTableViewHeader: UIView {
 
+    private enum SectionTabs: String {
+        case tweets = "Tweets"
+        case tweetAndReplies = "Tweets & Replies"
+        case media = "Media"
+        case likes = "Likes"
+        
+        var index: Int {
+            switch self {
+            case .tweets:
+                return 0
+            case .tweetAndReplies:
+                return 1
+            case .media:
+                return 2
+            case .likes:
+                return 3
+            }
+        }
+    }
+    
+    private var selectedTab: Int = 0 {
+        didSet {
+            print(selectedTab)
+        }
+    }
+    
+    // MARK: add Stack 1
     private var tabs: [UIButton] = ["Tweets", "Tweets & Replies", "Media", "Likes"]
         .map { buttonTitle in
             let button = UIButton(type: .system)
@@ -18,7 +45,7 @@ class ProfileTableViewHeader: UIView {
             button.translatesAutoresizingMaskIntoConstraints = false
             return button
         }
-    
+    // MARK: add Stack 2
     private lazy var sectionStack: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: tabs)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -144,6 +171,30 @@ class ProfileTableViewHeader: UIView {
         addSubview(followersTextLabel)
         addSubview(sectionStack)
         configureConstraints()
+        configureStackButton()
+    }
+    
+    private func configureStackButton() {
+        for (_, button) in sectionStack.arrangedSubviews.enumerated() {
+            guard let button = button as? UIButton else { return }
+            button.addTarget(self, action: #selector(didTap(_:)), for: .touchUpInside)
+        }
+    }
+    
+    @objc private func didTap(_ sender: UIButton) {
+        guard let label = sender.titleLabel?.text else { return }
+        switch label {
+        case SectionTabs.tweets.rawValue:
+            selectedTab = 0
+        case SectionTabs.tweetAndReplies.rawValue:
+            selectedTab = 1
+        case SectionTabs.media.rawValue:
+            selectedTab = 2
+        case SectionTabs.likes.rawValue:
+            selectedTab = 3
+        default:
+            selectedTab = 0
+        }
     }
     
     required init?(coder: NSCoder) {
