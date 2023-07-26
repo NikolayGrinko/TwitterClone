@@ -9,6 +9,14 @@ import UIKit
 
 class ProfileTableViewHeader: UIView {
 
+    private let displayNameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Grinya37"
+        label.font = .systemFont(ofSize: 22, weight: .bold)
+        return label
+    }()
+    
     private let profileAvatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -34,6 +42,7 @@ class ProfileTableViewHeader: UIView {
         backgroundColor = .red
         addSubview(profileHeaderImageView)
         addSubview(profileAvatarImageView)
+        addSubview(displayNameLabel)
         configureConstraints()
     }
     
@@ -58,9 +67,14 @@ class ProfileTableViewHeader: UIView {
             profileAvatarImageView.heightAnchor.constraint(equalToConstant: 80)
         ]
         
+        let displayNameLabelConstraints = [
+            displayNameLabel.leadingAnchor.constraint(equalTo: profileAvatarImageView.leadingAnchor),
+            displayNameLabel.topAnchor.constraint(equalTo: profileAvatarImageView.bottomAnchor, constant: 20)
+        ]
         
         NSLayoutConstraint.activate(profileHeaderImageViewConstraints)
         NSLayoutConstraint.activate(profileAvatarImageViewConstraints)
+        NSLayoutConstraint.activate(displayNameLabelConstraints)
         
     }
 }
