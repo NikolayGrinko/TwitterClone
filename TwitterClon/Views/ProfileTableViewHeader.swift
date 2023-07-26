@@ -9,6 +9,42 @@ import UIKit
 
 class ProfileTableViewHeader: UIView {
 
+    private let followersTextLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Followews"
+        label.textColor = .secondaryLabel
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        return label
+    }()
+    
+    private let followersCountLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "1M"
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 14, weight: .bold)
+        return label
+    }()
+    
+    private let followingTextLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Following"
+        label.textColor = .secondaryLabel
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        return label
+    }()
+    
+    private let followingCountLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "314"
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 14, weight: .bold)
+        return label
+    }()
+    
     private let joinDateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -84,6 +120,10 @@ class ProfileTableViewHeader: UIView {
         addSubview(userBioLabel)
         addSubview(joinDataImageView)
         addSubview(joinDateLabel)
+        addSubview(followingCountLabel)
+        addSubview(followingTextLabel)
+        addSubview(followersCountLabel)
+        addSubview(followersTextLabel)
         configureConstraints()
     }
     
@@ -97,7 +137,7 @@ class ProfileTableViewHeader: UIView {
             profileHeaderImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             profileHeaderImageView.topAnchor.constraint(equalTo: topAnchor),
             profileHeaderImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            profileHeaderImageView.heightAnchor.constraint(equalToConstant: 120)
+            profileHeaderImageView.heightAnchor.constraint(equalToConstant: 150)
         ]
         
         let profileAvatarImageViewConstraints = [
