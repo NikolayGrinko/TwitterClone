@@ -28,10 +28,32 @@ class ProfileTableViewHeader: UIView {
             }
         }
     }
+    //MARK: индикатор выбора ячейки твита профиля
+    private  var leadingAnchors: [NSLayoutConstraint] = []
+    private  var trailingAnchors: [NSLayoutConstraint] = []
     
+    //MARK: индикатор выбора ячейки твита профиля
+    private let indicator: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+        return view
+    }()
+    
+    // MARK: выбор ячейки (изменение цвета) при нажатии
     private var selectedTab: Int = 0 {
         didSet {
-            print(selectedTab)
+            for i in 0..<tabs.count {
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) { [weak self ] in
+                    self?.sectionStack.arrangedSubviews[i].tintColor = i == self?.selectedTab ? .label : .secondaryLabel
+                    //MARK: индикатор выбора ячейки твита профиля
+                    self?.leadingAnchors[i].isActive = i == self?.selectedTab ? true : false
+                    self?.trailingAnchors[i].isActive = i == self?.selectedTab ? true : false
+                    self?.layoutIfNeeded()
+                } completion: { _ in
+                }
+               
+            }
         }
     }
     
@@ -170,13 +192,20 @@ class ProfileTableViewHeader: UIView {
         addSubview(followersCountLabel)
         addSubview(followersTextLabel)
         addSubview(sectionStack)
+        //MARK: индикатор выбора ячейки твита профиля
+        addSubview(indicator)
         configureConstraints()
         configureStackButton()
     }
     
     private func configureStackButton() {
-        for (_, button) in sectionStack.arrangedSubviews.enumerated() {
+        for (i, button) in sectionStack.arrangedSubviews.enumerated() {
             guard let button = button as? UIButton else { return }
+            if i == selectedTab {
+                button.tintColor = .label
+            } else {
+                button.tintColor = .secondaryLabel
+            }
             button.addTarget(self, action: #selector(didTap(_:)), for: .touchUpInside)
         }
     }
@@ -202,6 +231,13 @@ class ProfileTableViewHeader: UIView {
     }
     
     private func configureConstraints() {
+        
+        for i in 0..<tabs.count {
+            let leadingAnchor = indicator.leadingAnchor.constraint(equalTo: sectionStack.arrangedSubviews[i].leadingAnchor)
+            leadingAnchors.append(leadingAnchor)
+            let trailingAnchor = indicator.trailingAnchor.constraint(equalTo: sectionStack.arrangedSubviews[i].trailingAnchor)
+            trailingAnchors.append(trailingAnchor)
+        }
         
         let profileHeaderImageViewConstraints = [
             profileHeaderImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -270,6 +306,13 @@ class ProfileTableViewHeader: UIView {
             sectionStack.topAnchor.constraint(equalTo: followingCountLabel.bottomAnchor, constant: 5),
             sectionStack.heightAnchor.constraint(equalToConstant: 35)
         ]
+        //MARK: индикатор выбора ячейки твита профиля
+        let indicatorConstraints = [
+        leadingAnchors[0],
+        trailingAnchors[0],
+        indicator.topAnchor.constraint(equalTo: sectionStack.arrangedSubviews[0].bottomAnchor),
+        indicator.heightAnchor.constraint(equalToConstant: 4)
+        ]
         
         NSLayoutConstraint.activate(profileHeaderImageViewConstraints)
         NSLayoutConstraint.activate(profileAvatarImageViewConstraints)
@@ -283,6 +326,7 @@ class ProfileTableViewHeader: UIView {
         NSLayoutConstraint.activate(followersCountLabelConstraints)
         NSLayoutConstraint.activate(followersTextLabelConstraints)
         NSLayoutConstraint.activate(sectionStackConstraints)
+        NSLayoutConstraint.activate(indicatorConstraints)
         
         
     }
