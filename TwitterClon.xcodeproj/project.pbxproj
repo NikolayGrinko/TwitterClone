@@ -30,7 +30,9 @@
 		209ADE5E2A72A14B008889B9 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 209ADE5D2A72A14B008889B9 /* FirebaseStorageCombine-Community */; };
 		209ADE612A72A4F3008889B9 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209ADE602A72A4F3008889B9 /* OnboardingViewController.swift */; };
 		20E39FBF2A732DDA00C040FE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FBE2A732DDA00C040FE /* RegisterViewController.swift */; };
-		20E39FC22A73BA7900C040FE /* RegisterViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FC12A73BA7900C040FE /* RegisterViewViewModel.swift */; };
+		20E39FC22A73BA7900C040FE /* AuthenticationViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FC12A73BA7900C040FE /* AuthenticationViewViewModel.swift */; };
+		20E39FC52A73E87300C040FE /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FC42A73E87300C040FE /* AuthManager.swift */; };
+		20E39FC72A73F27C00C040FE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FC62A73F27C00C040FE /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,7 +53,9 @@
 		209ADE4C2A729F93008889B9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		209ADE602A72A4F3008889B9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		20E39FBE2A732DDA00C040FE /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
-		20E39FC12A73BA7900C040FE /* RegisterViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewViewModel.swift; sourceTree = "<group>"; };
+		20E39FC12A73BA7900C040FE /* AuthenticationViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewViewModel.swift; sourceTree = "<group>"; };
+		20E39FC42A73E87300C040FE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		20E39FC62A73F27C00C040FE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,7 @@
 		209ADD1B2A6E829F008889B9 /* TwitterClon */ = {
 			isa = PBXGroup;
 			children = (
+				20E39FC32A73E85300C040FE /* Networking */,
 				20E39FC02A73BA3700C040FE /* ViewModel */,
 				209ADD3A2A6E8A81008889B9 /* Views */,
 				209ADD302A6E8483008889B9 /* Controllers */,
@@ -149,6 +154,7 @@
 			children = (
 				209ADE602A72A4F3008889B9 /* OnboardingViewController.swift */,
 				20E39FBE2A732DDA00C040FE /* RegisterViewController.swift */,
+				20E39FC62A73F27C00C040FE /* LoginViewController.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -156,9 +162,17 @@
 		20E39FC02A73BA3700C040FE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				20E39FC12A73BA7900C040FE /* RegisterViewViewModel.swift */,
+				20E39FC12A73BA7900C040FE /* AuthenticationViewViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		20E39FC32A73E85300C040FE /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				20E39FC42A73E87300C040FE /* AuthManager.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,13 +260,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				209ADD352A6E84C5008889B9 /* SearchViewController.swift in Sources */,
+				20E39FC52A73E87300C040FE /* AuthManager.swift in Sources */,
 				209ADD212A6E829F008889B9 /* MainTabbarViewController.swift in Sources */,
+				20E39FC72A73F27C00C040FE /* LoginViewController.swift in Sources */,
 				209ADD1D2A6E829F008889B9 /* AppDelegate.swift in Sources */,
 				20E39FBF2A732DDA00C040FE /* RegisterViewController.swift in Sources */,
 				209ADD372A6E84E1008889B9 /* NotificationsViewController.swift in Sources */,
 				209ADD392A6E8506008889B9 /* DirectMessageViewController.swift in Sources */,
 				209ADD1F2A6E829F008889B9 /* SceneDelegate.swift in Sources */,
-				20E39FC22A73BA7900C040FE /* RegisterViewViewModel.swift in Sources */,
+				20E39FC22A73BA7900C040FE /* AuthenticationViewViewModel.swift in Sources */,
 				209ADD7F2A6F183D008889B9 /* ProfileViewController.swift in Sources */,
 				209ADD332A6E84AA008889B9 /* HomeViewController.swift in Sources */,
 				209ADDC12A6F39C7008889B9 /* ProfileTableViewHeader.swift in Sources */,

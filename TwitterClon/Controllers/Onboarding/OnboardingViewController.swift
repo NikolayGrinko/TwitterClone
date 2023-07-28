@@ -8,7 +8,7 @@
 import UIKit
 
 class OnboardingViewController: UIViewController {
-
+    
     private let welcomeLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -59,10 +59,15 @@ class OnboardingViewController: UIViewController {
         view.addSubview(createaccountButton)
         view.addSubview(promtLabel)
         view.addSubview(loginButton)
-       
-        createaccountButton.addTarget(self, action: #selector(didTapCreateAccount), for: .touchUpInside)
         
+        createaccountButton.addTarget(self, action: #selector(didTapCreateAccount), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(didTapLogin), for: .touchUpInside)
         configureConstraints()
+    }
+    
+    @objc private func didTapLogin() {
+        let vc = LoginViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func didTapCreateAccount() {
@@ -71,7 +76,7 @@ class OnboardingViewController: UIViewController {
     }
     
     private func configureConstraints() {
-       
+        
         let welcomeLabelConstraints = [
             welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
