@@ -11,7 +11,7 @@ import Combine
 
 class HomeViewController: UIViewController {
     
-    private var viewModel = HomeViewViewModel()
+     var viewModel = HomeViewViewModel()
     private var subscriptions: Set<AnyCancellable> = []
     
     private func configureNavigationBar() {

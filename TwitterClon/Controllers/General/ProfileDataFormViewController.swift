@@ -6,9 +6,14 @@
 //
 
 import UIKit
+//MASK: modul download photos
+import PhotosUI
 
 class ProfileDataFormViewController: UIViewController {
 
+    // ХЕЗ ??????
+    private var viewModel = ProfileDataFormViewViewModel()
+    
     private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -17,7 +22,7 @@ class ProfileDataFormViewController: UIViewController {
         return scrollView
     }()
     // MARK: Add text field
-    private let displayNameTextLabel: UITextField = {
+    private let displayNameTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.keyboardType = .default
@@ -62,7 +67,7 @@ class ProfileDataFormViewController: UIViewController {
         imageView.image = UIImage(systemName: "camera.fill")
         imageView.tintColor = .gray
         imageView.isUserInteractionEnabled = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -79,21 +84,68 @@ class ProfileDataFormViewController: UIViewController {
         return textView
     }()
     
+    private let submitButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Submit", for: .normal)
+        button.tintColor = .white
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+        button.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 25
+        button.isEnabled = false
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubview(scrollView)
         scrollView.addSubview(hintLabel)
         scrollView.addSubview(avatarPlaceholderImageView)
-        scrollView.addSubview(displayNameTextLabel)
+        scrollView.addSubview(displayNameTextField)
         scrollView.addSubview(userNameTextField)
         scrollView.addSubview(bioTextView)
-        bioTextView.delegate = self
+        scrollView.addSubview(submitButton)
         isModalInPresentation = true
-        
+        displayNameTextField.delegate = self
+        userNameTextField.delegate = self
+        bioTextView.delegate = self
+        view.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(didTapToDismiss)))
         configureConstraints()
+        avatarPlaceholderImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToUpLoad)))
+        bindViews()
     }
 
+    @objc private func didUpdateDisplayName() {
+        viewModel.displayName = displayNameTextField.text
+    }
+    
+    @objc private func didUpdateUsername() {
+        
+    }
+    
+    
+    private func bindViews() {
+        displayNameTextField.addTarget(self, action: #selector(didUpdateDisplayName), for: .editingChanged)
+        userNameTextField.addTarget(self, action: #selector(didUpdateUsername), for: .editingChanged)
+        
+    }
+    
+    @objc private func didTapToUpLoad() {
+       var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        configuration.selectionLimit = 1
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    
+    @objc private func didTapToDismiss() {
+        view.endEditing(true)
+    }
+    
     private func  configureConstraints() {
         
     let scrollViewConstraints = [
@@ -116,24 +168,31 @@ class ProfileDataFormViewController: UIViewController {
         ]
         
         let displayNameTextLabelConstraint = [
-            displayNameTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            displayNameTextLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            displayNameTextLabel.topAnchor.constraint(equalTo: avatarPlaceholderImageView.bottomAnchor, constant: 40),
-            displayNameTextLabel.heightAnchor.constraint(equalToConstant: 50)
+            displayNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            displayNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            displayNameTextField.topAnchor.constraint(equalTo: avatarPlaceholderImageView.bottomAnchor, constant: 40),
+            displayNameTextField.heightAnchor.constraint(equalToConstant: 50)
         ]
         
         let userNameTextFieldConstraints = [
-            userNameTextField.leadingAnchor.constraint(equalTo: displayNameTextLabel.leadingAnchor),
-            userNameTextField.trailingAnchor.constraint(equalTo: displayNameTextLabel.trailingAnchor),
-            userNameTextField.topAnchor.constraint(equalTo: displayNameTextLabel.bottomAnchor, constant: 20),
+            userNameTextField.leadingAnchor.constraint(equalTo: displayNameTextField.leadingAnchor),
+            userNameTextField.trailingAnchor.constraint(equalTo: displayNameTextField.trailingAnchor),
+            userNameTextField.topAnchor.constraint(equalTo: displayNameTextField.bottomAnchor, constant: 20),
             userNameTextField.heightAnchor.constraint(equalToConstant: 50)
         ]
         
         let bioTextViewConstraints = [
-            bioTextView.leadingAnchor.constraint(equalTo: displayNameTextLabel.leadingAnchor),
-            bioTextView.trailingAnchor.constraint(equalTo: displayNameTextLabel.trailingAnchor),
+            bioTextView.leadingAnchor.constraint(equalTo: displayNameTextField.leadingAnchor),
+            bioTextView.trailingAnchor.constraint(equalTo: displayNameTextField.trailingAnchor),
             bioTextView.topAnchor.constraint(equalTo: userNameTextField.bottomAnchor, constant: 20),
             bioTextView.heightAnchor.constraint(equalToConstant: 150)
+        ]
+        
+        let submitButtonConstraints = [
+            submitButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            submitButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            submitButton.heightAnchor.constraint(equalToConstant: 50),
+            submitButton.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -20)
         ]
         
         NSLayoutConstraint.activate(scrollViewConstraints)
@@ -142,14 +201,16 @@ class ProfileDataFormViewController: UIViewController {
         NSLayoutConstraint.activate(displayNameTextLabelConstraint)
         NSLayoutConstraint.activate(userNameTextFieldConstraints)
         NSLayoutConstraint.activate(bioTextViewConstraints)
+        NSLayoutConstraint.activate(submitButtonConstraints)
     }
     
 }
 
-extension ProfileDataFormViewController: UITextViewDelegate {
+extension ProfileDataFormViewController: UITextViewDelegate, UITextFieldDelegate {
     
     //MARK: Text editing started
     func textViewDidBeginEditing(_ textView: UITextView) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: textView.frame.origin.y - 100), animated: true)
         if textView.textColor == .gray {
             textView.textColor = .label
             textView.text = ""
@@ -162,4 +223,44 @@ extension ProfileDataFormViewController: UITextViewDelegate {
             textView.textColor = .gray
         }
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel.bio = textView.text
+    }
+    
+    //MARK: When you call the keyboard, everything moves up
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: textField.frame.origin.y - 100), animated: true)
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
 }
+
+//MARK: Method extension for adding a photo to a profile
+extension ProfileDataFormViewController: PHPickerViewControllerDelegate {
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        
+        // MARK: Method to navigate back to profile after selecting a photo
+        picker.dismiss(animated: true)
+        
+        //Mark: method for uploading and installing a photo in a profile avatar
+        for result in results {
+            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
+                if let image = object as? UIImage {
+                    DispatchQueue.main.async {
+                        self?.avatarPlaceholderImageView.image = image
+                    }
+                }
+            }
+        }
+    }
+    
+    
+}
+
+
+
+
+

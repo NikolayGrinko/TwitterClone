@@ -10,7 +10,7 @@ import Combine
 
 class LoginViewController: UIViewController {
     
-    private var viewModel = AuthenticationViewViewModel()
+     var viewModel = AuthenticationViewViewModel()
     private var subscriptions: Set<AnyCancellable> = []
 
     private let loginTitleLabel: UILabel = {
