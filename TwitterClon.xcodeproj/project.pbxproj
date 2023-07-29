@@ -38,6 +38,7 @@
 		20E39FCE2A7465B500C040FE /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FCD2A7465B500C040FE /* HomeViewModel.swift */; };
 		20E39FD02A74703300C040FE /* ProfileDataFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FCF2A74703300C040FE /* ProfileDataFormViewController.swift */; };
 		20E39FD22A74754D00C040FE /* ProfileDataFormViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FD12A74754D00C040FE /* ProfileDataFormViewViewModel.swift */; };
+		20E39FD42A7598B500C040FE /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FD32A7598B500C040FE /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		20E39FCD2A7465B500C040FE /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		20E39FCF2A74703300C040FE /* ProfileDataFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataFormViewController.swift; sourceTree = "<group>"; };
 		20E39FD12A74754D00C040FE /* ProfileDataFormViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataFormViewViewModel.swift; sourceTree = "<group>"; };
+		20E39FD32A7598B500C040FE /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 			children = (
 				20E39FC42A73E87300C040FE /* AuthManager.swift */,
 				20E39FCB2A74588400C040FE /* DatabaseManager.swift */,
+				20E39FD32A7598B500C040FE /* StorageManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				209ADD352A6E84C5008889B9 /* SearchViewController.swift in Sources */,
 				20E39FCE2A7465B500C040FE /* HomeViewModel.swift in Sources */,
 				20E39FC52A73E87300C040FE /* AuthManager.swift in Sources */,
+				20E39FD42A7598B500C040FE /* StorageManager.swift in Sources */,
 				209ADD212A6E829F008889B9 /* MainTabbarViewController.swift in Sources */,
 				20E39FC72A73F27C00C040FE /* LoginViewController.swift in Sources */,
 				20E39FCC2A74588400C040FE /* DatabaseManager.swift in Sources */,

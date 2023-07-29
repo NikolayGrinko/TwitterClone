@@ -5,7 +5,9 @@
 //  Created by Николай Гринько on 29.07.2023.
 //
 
+
 import UIKit
+import Combine
 //MASK: modul download photos
 import PhotosUI
 
@@ -13,6 +15,7 @@ class ProfileDataFormViewController: UIViewController {
 
     // ХЕЗ ??????
     private var viewModel = ProfileDataFormViewViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
     
     private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -119,17 +122,22 @@ class ProfileDataFormViewController: UIViewController {
 
     @objc private func didUpdateDisplayName() {
         viewModel.displayName = displayNameTextField.text
+        viewModel.validateUserProfileForm()
     }
     
     @objc private func didUpdateUsername() {
-        
+        viewModel.username = userNameTextField.text
+        viewModel.validateUserProfileForm()
     }
     
     
     private func bindViews() {
         displayNameTextField.addTarget(self, action: #selector(didUpdateDisplayName), for: .editingChanged)
         userNameTextField.addTarget(self, action: #selector(didUpdateUsername), for: .editingChanged)
-        
+        viewModel.$isFormValid.sink { [weak self] buttonState in
+            self?.submitButton.isEnabled = buttonState
+        }
+        .store(in: &subscriptions)
     }
     
     @objc private func didTapToUpLoad() {
@@ -251,13 +259,13 @@ extension ProfileDataFormViewController: PHPickerViewControllerDelegate {
                 if let image = object as? UIImage {
                     DispatchQueue.main.async {
                         self?.avatarPlaceholderImageView.image = image
+                        self?.viewModel.imageData = image
+                        self?.viewModel.validateUserProfileForm()
                     }
                 }
             }
         }
     }
-    
-    
 }
 
 
