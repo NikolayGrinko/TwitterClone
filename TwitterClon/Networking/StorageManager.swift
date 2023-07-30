@@ -27,6 +27,7 @@ final class StorageManager {
        return storage
             .reference(withPath: id)
             .downloadURL()
+            .print()
             .eraseToAnyPublisher()
     }
     

@@ -93,7 +93,7 @@ class ProfileDataFormViewController: UIViewController {
         button.setTitle("Submit", for: .normal)
         button.tintColor = .white
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
-        button.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha: 1)
+        button.backgroundColor = .twitterBlueColor
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 25
         button.isEnabled = false
@@ -116,10 +116,15 @@ class ProfileDataFormViewController: UIViewController {
         bioTextView.delegate = self
         view.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(didTapToDismiss)))
         configureConstraints()
+        submitButton.addTarget(self, action: #selector(didTapSubmit), for: .touchUpInside)
         avatarPlaceholderImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToUpLoad)))
         bindViews()
     }
 
+    @objc private func didTapSubmit() {
+        viewModel.uploadAvatar()
+    }
+    
     @objc private func didUpdateDisplayName() {
         viewModel.displayName = displayNameTextField.text
         viewModel.validateUserProfileForm()
@@ -136,6 +141,13 @@ class ProfileDataFormViewController: UIViewController {
         userNameTextField.addTarget(self, action: #selector(didUpdateUsername), for: .editingChanged)
         viewModel.$isFormValid.sink { [weak self] buttonState in
             self?.submitButton.isEnabled = buttonState
+        }
+        .store(in: &subscriptions)
+        
+        viewModel.$isOnBoardingFinished.sink { [weak self] success in
+            if success {
+                self?.dismiss(animated: true)
+            }
         }
         .store(in: &subscriptions)
     }
@@ -234,6 +246,7 @@ extension ProfileDataFormViewController: UITextViewDelegate, UITextFieldDelegate
     
     func textViewDidChange(_ textView: UITextView) {
         viewModel.bio = textView.text
+        viewModel.validateUserProfileForm()
     }
     
     //MARK: When you call the keyboard, everything moves up

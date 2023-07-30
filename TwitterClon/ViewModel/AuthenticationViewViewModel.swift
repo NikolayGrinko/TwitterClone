@@ -52,17 +52,19 @@ final class AuthenticationViewViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-//    func createUserRecord(for user: User) {
-//        DatabaseManager.shared.collectionUser(add: user)
-//            .sink { [weak self] completion in
-//                if case .failure(let error) = completion {
-//                    self?.error = error.localizedDescription
-//                }
-//            } receiveValue: { state in
-//                print("Adding user record to database: \(state)")
-//            }
-//            .store(in: &subscriptions)
-//    }
+    
+    // delete delete
+    func createUserRecord(for user: User) {
+        DatabaseManager.shared.collectionUser(add: user)
+            .sink { [weak self] completion in
+                if case .failure(let error) = completion {
+                    self?.error = error.localizedDescription
+                }
+            } receiveValue: { state in
+                print("Adding user record to database: \(state)")
+            }
+            .store(in: &subscriptions)
+    }
     
     func createRecord(for user: User) {
         DatabaseManager.shared.collectionUser(add: user)

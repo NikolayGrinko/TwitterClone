@@ -21,8 +21,9 @@ final class ProfileDataFormViewViewModel: ObservableObject {
     @Published var avatarPath: String?
     @Published var imageData: UIImage?
     @Published var isFormValid: Bool = false
-    @Published var url: URL?
+   // @Published var url: URL?
     @Published var error: String = ""
+    @Published var isOnBoardingFinished: Bool = false
     
     func validateUserProfileForm() {
         guard let displayName = displayName,
@@ -45,17 +46,53 @@ final class ProfileDataFormViewViewModel: ObservableObject {
         
         guard let imageData = imageData?.jpegData(compressionQuality: 0.5) else { return }
         let metaData = StorageMetadata()
-        metaData.contentType = "image.jpeg"
+        metaData.contentType = "image/jpeg"
         StorageManager.shared.uploadProfilePhoto(with: randomID, image: imageData, metaData: metaData)
             .flatMap({ metaData in
                 StorageManager.shared.getDownload(for: metaData.path)
             })
             .sink { [weak self] completion in
+                
+                switch completion {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self?.error = error.localizedDescription
+                case .finished:
+                    self?.updateUserData()
+                }
+                
+            } receiveValue: { [weak self] url in
+                self?.avatarPath = url.absoluteString
+            }
+            .store(in: &subscriptions)
+    }
+    
+    
+    
+    
+    private func updateUserData() {
+        
+        guard let displayName,
+              let username,
+              let bio,
+              let avatarPath,
+        let id = Auth.auth().currentUser?.uid else {return}
+        
+        let updatedFields: [String: Any] = [
+            "displayName": displayName,
+            "username": username,
+            "bio": bio,
+            "avatarPath": avatarPath,
+            "isUserOnboarded": true
+        ]
+        DatabaseManager.shared.collectionUsers(updateField: updatedFields, for: id)
+            .sink { [weak self] completion in
                 if case .failure(let error) = completion {
+                    print(error.localizedDescription)
                     self?.error = error.localizedDescription
                 }
-            } receiveValue: { [weak self] url in
-                self?.url = url
+            } receiveValue: { [weak self] onboarding in
+                self?.isOnBoardingFinished = onboarding
             }
             .store(in: &subscriptions)
     }
