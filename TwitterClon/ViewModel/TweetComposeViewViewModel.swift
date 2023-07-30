@@ -15,7 +15,7 @@ final class TweetComposeViewViewModel: ObservableObject {
     
     
     // ETUUU
-    @Published var isValidToTweet: Bool = true
+    @Published var isValidToTweet: Bool = false
     @Published var error: String = ""
     @Published var shouldDismissComposer: Bool = false
     var tweetContent: String = ""
@@ -35,12 +35,12 @@ final class TweetComposeViewViewModel: ObservableObject {
     }
     
     func validateToTweet() {
-        isValidToTweet = tweetContent.isEmpty
+        isValidToTweet = !tweetContent.isEmpty
     }
     
     func dispatchTweet() {
         guard let user = user else {return}
-        let tweet = Tweet(author: user, tweetContent: tweetContent, liceCount: 0, likers: [], isReply: false, parentReference: nil)
+        let tweet = Tweet(author: user, authorID: user.id, tweetContent: tweetContent, liceCount: 0, likers: [], isReply: false, parentReference: nil)
         DatabaseManager.shared.collectionTweets(dispatch: tweet)
             .sink {[weak self] completion in
                 if case .failure(let error) = completion {

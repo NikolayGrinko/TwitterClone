@@ -30,14 +30,12 @@ class TweetTableViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 25
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(systemName: "person")
         imageView.backgroundColor = .red
        return imageView
     }()
     
     private let displayNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Grinya37"
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
@@ -45,7 +43,6 @@ class TweetTableViewCell: UITableViewCell {
     
     private let usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = "@yandex.ru"
         label.textColor = .secondaryLabel
         label.font = .systemFont(ofSize: 16, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +52,6 @@ class TweetTableViewCell: UITableViewCell {
     private let tweetTextContentLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "This is usually a sign that your app needs multithreading! In this tutorial, you’ll get hands on experience with the core multithreading API available on iOS: Grand Central Dispatch. You’ll take an...!"
         label.numberOfLines = 0
     return label
     }()
@@ -138,6 +134,15 @@ class TweetTableViewCell: UITableViewCell {
     }
     
     
+    func configureTweet(with displayName: String, username: String, tweetTextContent: String, avatarPath: String) {
+        
+        displayNameLabel.text = displayName
+        usernameLabel.text = "@\(username)"
+        tweetTextContentLabel.text = tweetTextContent
+        avatarImageView.sd_setImage(with: URL(string: avatarPath))
+        
+        
+    }
     
     
     private func configureConstraints() {
