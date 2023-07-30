@@ -43,6 +43,8 @@
 		20E39FD92A75CAF000C040FE /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 20E39FD82A75CAF000C040FE /* SDWebImage */; };
 		20E39FDD2A75D0B900C040FE /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FDC2A75D0B900C040FE /* Extension+UIColor.swift */; };
 		20E39FDF2A75D59700C040FE /* TweetComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FDE2A75D59700C040FE /* TweetComposeViewController.swift */; };
+		20E39FE12A76FA3400C040FE /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FE02A76FA3400C040FE /* Tweet.swift */; };
+		20E39FE32A76FB2100C040FE /* TweetComposeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E39FE22A76FB2100C040FE /* TweetComposeViewViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +77,8 @@
 		20E39FD52A75C07D00C040FE /* ProfileViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewViewModel.swift; sourceTree = "<group>"; };
 		20E39FDC2A75D0B900C040FE /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		20E39FDE2A75D59700C040FE /* TweetComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetComposeViewController.swift; sourceTree = "<group>"; };
+		20E39FE02A76FA3400C040FE /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
+		20E39FE22A76FB2100C040FE /* TweetComposeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetComposeViewViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				20E39FDA2A75D09100C040FE /* Utils */,
-				20E39FC82A7456AC00C040FE /* Model */,
+				20E39FC82A7456AC00C040FE /* Models */,
 				20E39FC32A73E85300C040FE /* Networking */,
 				20E39FC02A73BA3700C040FE /* ViewModel */,
 				209ADD3A2A6E8A81008889B9 /* Views */,
@@ -190,6 +194,7 @@
 				20E39FCD2A7465B500C040FE /* HomeViewModel.swift */,
 				20E39FD12A74754D00C040FE /* ProfileDataFormViewViewModel.swift */,
 				20E39FD52A75C07D00C040FE /* ProfileViewViewModel.swift */,
+				20E39FE22A76FB2100C040FE /* TweetComposeViewViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -204,12 +209,13 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		20E39FC82A7456AC00C040FE /* Model */ = {
+		20E39FC82A7456AC00C040FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				20E39FC92A7456E900C040FE /* TwitterUser.swift */,
+				20E39FE02A76FA3400C040FE /* Tweet.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		20E39FDA2A75D09100C040FE /* Utils */ = {
@@ -325,8 +331,10 @@
 				20E39FCC2A74588400C040FE /* DatabaseManager.swift in Sources */,
 				20E39FD62A75C07D00C040FE /* ProfileViewViewModel.swift in Sources */,
 				209ADD1D2A6E829F008889B9 /* AppDelegate.swift in Sources */,
+				20E39FE12A76FA3400C040FE /* Tweet.swift in Sources */,
 				20E39FBF2A732DDA00C040FE /* RegisterViewController.swift in Sources */,
 				209ADD372A6E84E1008889B9 /* NotificationsViewController.swift in Sources */,
+				20E39FE32A76FB2100C040FE /* TweetComposeViewViewModel.swift in Sources */,
 				209ADD392A6E8506008889B9 /* DirectMessageViewController.swift in Sources */,
 				209ADD1F2A6E829F008889B9 /* SceneDelegate.swift in Sources */,
 				20E39FD22A74754D00C040FE /* ProfileDataFormViewViewModel.swift in Sources */,

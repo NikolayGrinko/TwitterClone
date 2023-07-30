@@ -21,7 +21,6 @@ final class ProfileDataFormViewViewModel: ObservableObject {
     @Published var avatarPath: String?
     @Published var imageData: UIImage?
     @Published var isFormValid: Bool = false
-   // @Published var url: URL?
     @Published var error: String = ""
     @Published var isOnBoardingFinished: Bool = false
     

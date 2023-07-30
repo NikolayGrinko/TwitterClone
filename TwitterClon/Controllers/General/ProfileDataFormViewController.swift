@@ -13,7 +13,7 @@ import PhotosUI
 
 class ProfileDataFormViewController: UIViewController {
 
-    // ХЕЗ ??????
+   //MARK:
     private var viewModel = ProfileDataFormViewViewModel()
     private var subscriptions: Set<AnyCancellable> = []
     
@@ -262,6 +262,7 @@ extension ProfileDataFormViewController: UITextViewDelegate, UITextFieldDelegate
 extension ProfileDataFormViewController: PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        
         
         // MARK: Method to navigate back to profile after selecting a photo
         picker.dismiss(animated: true)

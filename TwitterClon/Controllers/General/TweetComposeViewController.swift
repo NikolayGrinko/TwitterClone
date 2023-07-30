@@ -16,6 +16,7 @@ class TweetComposeViewController: UIViewController {
         button.setTitle("Tweet", for: .normal)
         button.layer.cornerRadius = 20
         button.clipsToBounds = true
+        button.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
         button.setTitleColor(.white, for: .normal)
         return button
     }()
